@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:azhar-test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+
+app:
+  jwt:
+    secret: test-secret-key-for-jwt-authentication-min-32-chars
+    expiration: 86400000
+  seed:
+    admin-email: admin@example.com
+    admin-password: Admin123!

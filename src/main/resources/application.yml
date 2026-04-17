@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: azhar
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/azhar_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  jackson:
+    default-property-inclusion: non_null
+
+server:
+  port: ${SERVER_PORT:8080}
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:change-this-secret-to-a-long-random-base64-or-plain-string-at-least-32-chars}
+    expiration: ${JWT_EXPIRATION:86400000}
+  seed:
+    admin-email: ${SEED_ADMIN_EMAIL:admin@example.com}
+    admin-password: ${SEED_ADMIN_PASSWORD:Admin123!}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs

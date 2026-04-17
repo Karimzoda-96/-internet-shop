@@ -1,0 +1,7 @@
+package my.shop.azhar.repository;
+
+import my.shop.azhar.entity.ProductImage;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductImageRepository extends JpaRepository<ProductImage, Long> {
+}
