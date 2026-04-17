@@ -4,7 +4,7 @@ Production-ready MVP backend for an online shop. The API supports public catalog
 
 ## Stack
 
-- Java 21
+- Java 21 --
 - Spring Boot 3.5
 - Spring Web
 - Spring Data JPA
