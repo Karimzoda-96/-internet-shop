@@ -2,16 +2,15 @@ services:
   postgres:
     image: postgres:16-alpine
     container_name: azhar-postgres
+    restart: unless-stopped
     environment:
-      POSTGRES_DB: azhar
-      POSTGRES_USER: ${DB_USERNAME:-azhar}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-azhar}
-    ports:
-      - "5432:5432"
+      POSTGRES_DB: azhar_db
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-azhar} -d azhar"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d azhar_db"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -19,18 +18,21 @@ services:
   backend:
     build: .
     container_name: azhar-backend
+    restart: unless-stopped
     depends_on:
       postgres:
         condition: service_healthy
     environment:
-      DB_URL: ${DB_URL:-jdbc:postgresql://postgres:5432/azhar}
-      DB_USERNAME: ${DB_USERNAME:-azhar}
-      DB_PASSWORD: ${DB_PASSWORD:-azhar}
-      JWT_SECRET: ${JWT_SECRET:-change-this-secret-to-a-long-random-value-at-least-32-characters}
+      DB_URL: ${DB_URL:-jdbc:postgresql://postgres:5432/azhar_db}
+      DB_USERNAME: ${DB_USERNAME:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRATION: ${JWT_EXPIRATION:-86400000}
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
       JPA_DDL_AUTO: ${JPA_DDL_AUTO:-update}
       SERVER_PORT: 8080
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@example.com}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-Admin123!}
     ports:
       - "8080:8080"
 
